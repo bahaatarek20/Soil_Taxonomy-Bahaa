@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>طبقات | ذاكر تقسيم الأراضي</title>
+  <meta name="description" content="أبلكيشن مذاكرة تقسيم الأراضي: ملخصات، كروت حفظ، اختبارات، وخطة مذاكرة للمحاضرات 1 و 2 و 3.">
+  <meta name="theme-color" content="#2a1c13">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232a1c13'/><rect x='10' y='14' width='44' height='8' rx='3' fill='%235b7f3a'/><rect x='10' y='25' width='44' height='8' rx='3' fill='%23e9dcc3'/><rect x='10' y='36' width='44' height='8' rx='3' fill='%23c4572e'/><rect x='10' y='47' width='44' height='6' rx='3' fill='%23c9a776'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#plan" aria-label="طبقات - الرئيسية">
+      <span class="brand-logo" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      <span class="brand-text"><b>طبقات</b><small>تقسيم الأراضي</small></span>
+    </a>
+    <nav class="tabs" id="tabs" aria-label="الأقسام">
+      <a href="#plan" data-tab="plan"><span class="ic">🗺️</span><span>الخطة</span></a>
+      <a href="#summary" data-tab="summary"><span class="ic">📖</span><span>الملخص</span></a>
+      <a href="#cards" data-tab="cards"><span class="ic">🃏</span><span>الكروت</span></a>
+      <a href="#quiz" data-tab="quiz"><span class="ic">✍️</span><span>اختبر نفسك</span></a>
+      <a href="#numbers" data-tab="numbers"><span class="ic">🔢</span><span>الأرقام</span></a>
+    </nav>
+    <button id="themeBtn" class="icon-btn" aria-label="تغيير الوضع الليلي">🌙</button>
+  </header>
+
+  <main id="app">
+    <!-- ========== الخطة ========== -->
+    <section id="view-plan" class="view" aria-label="خطة المذاكرة">
+      <div class="hero">
+        <div class="hero-text">
+          <span class="eyebrow">امتحان بكرة في المحاضرة ✏️</span>
+          <h1>انزل في القطاع طبقة طبقة<br><span>لحد ما توصل للصخر الأصلي 🪨</span></h1>
+          <p>كل خطوة في الخطة طبقة في القطاع الأرضي، من <b>O</b> لحد <b>R</b>. خلّص الخطوة، علّم عليها، وانزل للي بعدها.</p>
+          <div class="scope">
+            <span class="chip read">📗 م١: قراءة بس</span>
+            <span class="chip exam">🎯 م٢ + م٣: عليهم الامتحان</span>
+          </div>
+        </div>
+        <div class="stats" id="stats"></div>
+      </div>
+
+      <div class="plan-head">
+        <h2>خطة المذاكرة</h2>
+        <span class="muted" id="planTime"></span>
+      </div>
+      <ol class="plan" id="plan"></ol>
+      <div class="plan-foot">
+        <button class="btn ghost sm" id="resetPlan">↺ ابدأ الخطة من الأول</button>
+      </div>
+    </section>
+
+    <!-- ========== الملخص ========== -->
+    <section id="view-summary" class="view" aria-label="الملخصات">
+      <div class="seg" id="lecTabs" role="tablist"></div>
+      <div id="lecture"></div>
+    </section>
+
+    <!-- ========== الكروت ========== -->
+    <section id="view-cards" class="view" aria-label="كروت الحفظ">
+      <div class="section-head">
+        <h2>🃏 كروت الحفظ</h2>
+        <p class="muted">اضغط على الكارت عشان تقلبه. لو حافظه اضغط ✓، ولو لسه اضغط ↻ وهيرجعلك تاني.</p>
+      </div>
+      <div class="filters" id="cardFilters"></div>
+      <div class="deck-meta"><span id="deckCount"></span><div class="bar"><i id="deckBar"></i></div><span id="deckKnown"></span></div>
+      <div class="flash-wrap">
+        <div class="flash" id="flash" tabindex="0" role="button" aria-label="اقلب الكارت">
+          <div class="face front"><span class="tag" id="cardTag"></span><div class="txt" id="cardFront"></div><span class="hint">اضغط عشان تشوف الإجابة ↺</span></div>
+          <div class="face back"><span class="tag" id="cardTag2"></span><div class="txt" id="cardBack"></div></div>
+        </div>
+        <div class="empty" id="deckEmpty" hidden>
+          <div class="big">🎉</div>
+          <h3>مفيش كروت هنا!</h3>
+          <p>حافظ كل الكروت في الاختيار ده. جرّب فلتر تاني أو ابدأ من الأول.</p>
+        </div>
+      </div>
+      <div class="card-actions">
+        <button class="btn ghost" id="prevCard" aria-label="السابق">→</button>
+        <button class="btn again" id="againCard">↻ لسه</button>
+        <button class="btn ok" id="knowCard">✓ حافظها</button>
+        <button class="btn ghost" id="nextCard" aria-label="التالي">←</button>
+      </div>
+      <div class="card-tools">
+        <button class="btn ghost sm" id="shuffleCards">🔀 لخبطهم</button>
+        <button class="btn ghost sm" id="resetCards">↺ صفّر المحفوظ</button>
+        <span class="muted kbd-hint">⌨️ Space للقلب • الأسهم للتنقل</span>
+      </div>
+    </section>
+
+    <!-- ========== الاختبار ========== -->
+    <section id="view-quiz" class="view" aria-label="اختبر نفسك">
+      <div id="quizSetup">
+        <div class="section-head">
+          <h2>✍️ اختبر نفسك</h2>
+          <p class="muted">اختار المحاضرة وعدد الأسئلة. هتعرف الإجابة الصح والشرح على طول.</p>
+        </div>
+        <h4 class="label">المحتوى</h4>
+        <div class="choice" id="scopeChoice"></div>
+        <h4 class="label">عدد الأسئلة</h4>
+        <div class="choice" id="countChoice"></div>
+        <button class="btn primary big" id="startQuiz">يلا نبدأ 🚀</button>
+      </div>
+
+      <div id="quizRun" hidden>
+        <div class="q-top">
+          <button class="btn ghost sm" id="quitQuiz">✕ خروج</button>
+          <span id="qCounter"></span>
+          <span class="q-score" id="qScore"></span>
+        </div>
+        <div class="bar q-bar"><i id="qBar"></i></div>
+        <div class="q-card">
+          <span class="tag" id="qTag"></span>
+          <h3 id="qText"></h3>
+          <div class="options" id="qOptions"></div>
+          <div class="explain" id="qExplain" hidden></div>
+        </div>
+        <button class="btn primary big" id="nextQ" hidden>السؤال اللي بعده ←</button>
+      </div>
+
+      <div id="quizResult" hidden>
+        <div class="result">
+          <div class="ring" id="ring"><span id="ringVal"></span></div>
+          <h2 id="resultTitle"></h2>
+          <p id="resultMsg" class="muted"></p>
+          <div class="result-actions">
+            <button class="btn primary" id="retryQuiz">↻ اختبار جديد</button>
+            <button class="btn ghost" id="reviewWrong">📌 راجع أخطائي</button>
+          </div>
+        </div>
+        <div id="wrongList"></div>
+      </div>
+    </section>
+
+    <!-- ========== الأرقام ========== -->
+    <section id="view-numbers" class="view" aria-label="الأرقام الذهبية">
+      <div class="section-head">
+        <h2>🔢 الأرقام الذهبية</h2>
+        <p class="muted">الدكتورة معلّمة على كل <mark>أكبر</mark> و<mark>أقل</mark> بالأخضر، يعني الأرقام دي أكيد هتيجي. احفظ الرقم واتجاهه.</p>
+      </div>
+
+      <div class="tools">
+        <div class="tool">
+          <h3>🧪 هل الأفق ده Argillic؟</h3>
+          <p class="muted">دخّل نسبة الطين في A و B.</p>
+          <div class="inputs">
+            <label>طين A %<input type="number" id="clayA" min="0" max="100" step="0.1" placeholder="مثلاً 20"></label>
+            <label>طين B %<input type="number" id="clayB" min="0" max="100" step="0.1" placeholder="مثلاً 26"></label>
+          </div>
+          <div class="tool-out" id="argOut">دخّل الأرقام وهقولك ✨</div>
+        </div>
+        <div class="tool">
+          <h3>🌡️ إيه النطاق الحراري؟</h3>
+          <p class="muted">متوسط الحرارة السنوي على عمق 50 سم.</p>
+          <div class="inputs">
+            <label>المتوسط السنوي °م<input type="number" id="tMean" step="0.1" placeholder="مثلاً 24"></label>
+            <label>متوسط الصيف °م<input type="number" id="tSummer" step="0.1" placeholder="اختياري"></label>
+            <label>متوسط الشتاء °م<input type="number" id="tWinter" step="0.1" placeholder="اختياري"></label>
+          </div>
+          <div class="tool-out" id="tempOut">دخّل الأرقام وهقولك ✨</div>
+        </div>
+      </div>
+
+      <div class="golden" id="golden"></div>
+    </section>
+  </main>
+
+  <footer class="foot">
+   بشمهندس بهاء || اتعمل للتسهيل على دفعتنا  🌱
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
